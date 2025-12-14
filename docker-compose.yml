@@ -1,0 +1,39 @@
+services:
+  frontend:
+    build:
+      context: ./Frontend
+    ports:
+      - "8080:5000"
+    depends_on:
+      - api
+    networks:
+      - app_network
+
+  api:
+    build:
+      context: ./APILayer
+    ports:
+      - "8081:8000"
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_NAME: appdb
+      DB_USER: appuser
+      DB_PASSWORD: strongpassword
+    networks:
+      - app_network
+
+  db:
+    build:
+      context: ./Database
+    environment:
+      POSTGRES_DB: appdb
+      POSTGRES_USER: appuser
+      POSTGRES_PASSWORD: strongpassword
+    networks:
+      - app_network
+
+networks:
+  app_network:
+    driver: bridge
