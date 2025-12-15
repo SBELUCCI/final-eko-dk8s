@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+data:
+  FRONTEND_ENV: "production"
+  API_URL: "http://api-service:5000"
